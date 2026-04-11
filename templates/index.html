@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Real Estate Investment Analytics</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar glass-effect">
+        <div class="logo">
+            <span class="icon">🏢</span>
+            <span>RealEstate AI</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#analyzer">Analyzer</a></li>
+            <li><a href="#admin">Admin Panel</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="hero" class="hero-section">
+        <div class="hero-content">
+            <h1>Smart Real Estate Investment Analytics</h1>
+            <p>Predict fair property value, analyze market trends, and estimate ROI using AI.</p>
+            <a href="#analyzer" class="btn-primary">Analyze Property</a>
+        </div>
+        <div class="hero-shapes">
+            <div class="shape circle-1"></div>
+            <div class="shape circle-2"></div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Property Input Form -->
+        <section id="analyzer" class="input-section glass-card">
+            <h2>Property Analyzer</h2>
+            <form id="predictionForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="location">Location / City</label>
+                        <input type="text" id="location" name="location" required placeholder="e.g. Mumbai">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="area">Area (sq ft)</label>
+                        <input type="number" id="area" name="area" required placeholder="e.g. 1500">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bhk">BHK</label>
+                        <input type="number" id="bhk" name="bhk" required placeholder="e.g. 3" min="1">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bathrooms">Bathrooms</label>
+                        <input type="number" id="bathrooms" name="bathrooms" required placeholder="e.g. 2" min="1">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="amenities">Amenities Score (1-10)</label>
+                        <input type="number" id="amenities" name="amenities" required min="1" max="10" placeholder="e.g. 8">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="marketTrend">Current Market Trend</label>
+                        <select id="marketTrend" name="marketTrend" required>
+                            <option value="High Growth">High Growth</option>
+                            <option value="Stable">Stable</option>
+                            <option value="Moderate Risk">Moderate Risk</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="investmentPeriod">Investment Period (Years)</label>
+                        <input type="number" id="investmentPeriod" name="investmentPeriod" required placeholder="e.g. 5" min="1">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="expectedGrowth">Expected Growth Rate (%)</label>
+                        <input type="number" id="expectedGrowth" name="expectedGrowth" required placeholder="e.g. 6.5" step="0.1">
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary w-100 mt-4">Predict Investment Value</button>
+            </form>
+        </section>
+
+        <!-- Dynamic Results Section (Hidden until prediction) -->
+        <div id="resultsWrapper" class="hidden">
+            <!-- Recommendation Banner -->
+            <div id="recommendationBanner" class="recommendation-banner glass-card">
+                <span id="aiPropertyCategory" class="badge ai-badge hidden">Loading...</span>
+                <div class="icon-wrap" id="recIcon">👍</div>
+                <div class="rec-content">
+                    <h3>AI Recommendation: <span id="recText">Invest</span></h3>
+                    <p>Based on our real-time market analysis and predicted ROI.</p>
+                </div>
+            </div>
+
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- KPI Cards -->
+                <div class="kpi-grid">
+                    <div class="kpi-card glass-card">
+                        <p class="kpi-label">Predicted Property Price</p>
+                        <h3 class="kpi-value" id="kpi-price">-</h3>
+                    </div>
+                    <div class="kpi-card glass-card">
+                        <p class="kpi-label">Future Est. Value</p>
+                        <h3 class="kpi-value" id="kpi-future">-</h3>
+                    </div>
+                    <div class="kpi-card glass-card">
+                        <p class="kpi-label">ROI Percentage</p>
+                        <h3 class="kpi-value" id="kpi-roi">-</h3>
+                    </div>
+                    <div class="kpi-card glass-card">
+                        <p class="kpi-label">Projected Profit / Loss</p>
+                        <h3 class="kpi-value" id="kpi-profit">-</h3>
+                    </div>
+                    <div class="kpi-card glass-card">
+                        <p class="kpi-label">Market Segment</p>
+                        <h3 class="kpi-value" id="kpi-segment">-</h3>
+                    </div>
+                    <div class="kpi-card glass-card">
+                        <p class="kpi-label">Risk Category</p>
+                        <h3 class="kpi-value" id="kpi-risk">-</h3>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="charts-grid">
+                    <div class="chart-card glass-card">
+                        <h3>Price Trend Forecast</h3>
+                        <canvas id="priceTrendChart"></canvas>
+                    </div>
+                    <div class="chart-card glass-card">
+                        <h3>ROI Growth Model</h3>
+                        <canvas id="roiGrowthChart"></canvas>
+                    </div>
+                    <div class="chart-card glass-card">
+                        <h3>Market Segmentation</h3>
+                        <div class="pie-container">
+                             <canvas id="segmentationChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card glass-card">
+                        <h3>Feature Importance</h3>
+                        <canvas id="featureImportanceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Panel Section -->
+        <section id="admin" class="admin-section glass-card mt-8">
+            <h2>Admin Panel</h2>
+            <div class="admin-actions">
+                <button class="btn-secondary">Upload Dataset</button>
+                <button class="btn-secondary">Retrain Model</button>
+                <button class="btn-secondary">View Prediction Logs</button>
+                <button class="btn-secondary">Update Market Trends</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="glass-effect text-center p-4">
+            <p>&copy; 2026 AI-Based Real Estate Investment Decision Support System. Mini Project.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
