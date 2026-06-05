@@ -1,111 +1,90 @@
-# 🏡 Real Estate AI – Smart Property Investment & Price Prediction System
+# Real Estate AI: Property Price Prediction and Investment Analysis System
 
-An AI-powered real estate analysis platform designed for **property buyers, sellers, investors, and business analysts**. The system predicts property prices, estimates future investment value, recommends property usage categories, and provides business-oriented analytics for smarter real estate decisions.
+## Overview
 
----
+Real Estate AI is a machine learning–based property analysis system developed to assist buyers, sellers, investors, and analysts in making informed real estate decisions.
 
-## 📌 Project Overview
+The system predicts property prices using historical housing data and provides investment-oriented insights such as future value estimation, return on investment (ROI), profitability analysis, and property categorization.
 
-Real estate investment decisions are often based on incomplete information, market uncertainty, and manual research. This project leverages **Machine Learning and Business Analytics** to provide:
-
-- 📈 Property price prediction
-- 💰 Future investment value estimation
-- 🏠 Property recommendation analysis
-- 📊 ROI and profitability insights
-- 🧠 Intelligent categorization for investment/business/domestic use
-- 🔄 Dynamic model retraining using updated datasets
-
-The system is built to serve both:
-
-### 👤 Common Users
-- Buyers
-- Sellers
-- Individuals looking to invest or sell property
-
-### 🏢 Business Users
-- Real estate investors
-- Property analysts
-- Business decision-makers
+The objective of this project is to combine data-driven prediction with business-oriented decision support in the real estate domain.
 
 ---
 
-# ✨ Key Features
+## Problem Statement
 
-## 🏠 Property Price Prediction
-Predicts estimated property price based on:
+Real estate investment decisions are often influenced by incomplete market information, inconsistent pricing, and limited analytical support. Property buyers and investors typically rely on manual research, making it difficult to assess whether a property is worth purchasing or investing in.
+
+This project addresses these challenges by using machine learning models to analyze property characteristics and historical trends to estimate property value and investment potential.
+
+---
+
+## Objectives
+
+The system is designed to:
+
+- Predict estimated property prices using historical data
+- Estimate future investment value based on growth trends
+- Support buyers and sellers in decision-making
+- Provide investment-related business analytics
+- Categorize properties for investment or domestic use
+- Enable continuous dataset expansion and retraining
+
+---
+
+## Features
+
+### Property Price Prediction
+The system predicts property prices using attributes such as:
 
 - Property size
 - Number of bedrooms
-- Bathrooms
-- Location trends
-- Historical property data
+- Number of bathrooms
+- Historical trends
+- Temporal information
 
----
+### Future Value Estimation
+The platform estimates the future value of a property based on expected growth rates and investment duration.
 
-## 📈 Future Investment Value Estimation
-Calculates estimated future property value using projected growth trends.
-
-Useful for:
-- Long-term investors
-- ROI analysis
-- Business planning
-
----
-
-## 💹 Business Analytics
-Provides:
+### Business Analytics
+The system provides analytical outputs including:
 
 - Return on Investment (ROI)
-- Expected Profit
-- Market Segment Classification
-- Risk Categorization
+- Expected profit estimation
+- Risk categorization
+- Market segment analysis
+
+### Property Classification
+Properties are categorized into:
+
+- Business / Investment
+- Domestic Use
+- Quick Sale / Deal
+
+using clustering and classification techniques.
+
+### Dataset Management
+The system supports:
+
+- Seller property submissions
+- Admin-controlled validation
+- Dataset staging
+- Model retraining after approval
 
 ---
 
-## 🧠 AI-Based Property Categorization
-Uses clustering and KNN classification to categorize properties into:
-
-- **Business / Investment**
-- **Domestic Use**
-- **Quick Sale / Deal**
-
----
-
-## 🛡️ Admin-Controlled Dataset Validation
-Includes a secure admin workflow:
-
-### Seller Upload → Staging → Validation → Model Retraining
-
-Only approved property data enters the final training dataset.
-
----
-
-## 📂 Dataset Expansion
-The system supports integration of multiple city-level datasets such as:
-
-- Hyderabad
-- Mumbai
-- Kolkata
-- Gurgaon
-
-to improve prediction robustness and accuracy.
-
----
-
-# 🧱 System Architecture
+## System Workflow
 
 ```text
 User Input
-      ↓
-Frontend (HTML/CSS/JS)
-      ↓
+    ↓
+Frontend Interface
+    ↓
 Flask Backend
-      ↓
-Preprocessing Pipeline
-      ↓
-Hybrid ML Model
-(Ridge + Random Forest)
-      ↓
-Prediction + Analytics
-      ↓
-Results Dashboard
+    ↓
+Data Preprocessing
+    ↓
+Hybrid Machine Learning Model
+    ↓
+Prediction and Analytics
+    ↓
+Result Dashboard
