@@ -1,90 +1,197 @@
-# Real Estate AI: Property Price Prediction and Investment Analysis System
+# 🏠 Smart Real Estate — AI Property Investment Analysis System
 
-## Overview
+> A machine learning–powered web application for property price prediction, future value estimation, and investment decision support — built on real Bangalore housing market data.
 
-Real Estate AI is a machine learning–based property analysis system developed to assist buyers, sellers, investors, and analysts in making informed real estate decisions.
-
-The system predicts property prices using historical housing data and provides investment-oriented insights such as future value estimation, return on investment (ROI), profitability analysis, and property categorization.
-
-The objective of this project is to combine data-driven prediction with business-oriented decision support in the real estate domain.
+🔗 **Live Demo:** [smart-real-estate-production-52d5.up.railway.app](https://smart-real-estate-production-52d5.up.railway.app)
 
 ---
 
-## Problem Statement
+## 📌 Overview
 
-Real estate investment decisions are often influenced by incomplete market information, inconsistent pricing, and limited analytical support. Property buyers and investors typically rely on manual research, making it difficult to assess whether a property is worth purchasing or investing in.
+Smart Real Estate is an end-to-end AI decision support system that helps buyers, sellers, and investors make data-driven real estate decisions. It combines a hybrid ML model (Ridge Regression + Random Forest) for price prediction with KNN-based property categorization, all served through a Flask web backend.
 
-This project addresses these challenges by using machine learning models to analyze property characteristics and historical trends to estimate property value and investment potential.
-
----
-
-## Objectives
-
-The system is designed to:
-
-- Predict estimated property prices using historical data
-- Estimate future investment value based on growth trends
-- Support buyers and sellers in decision-making
-- Provide investment-related business analytics
-- Categorize properties for investment or domestic use
-- Enable continuous dataset expansion and retraining
+The system was trained on 288 real listings scraped from 99acres.com covering the Bangalore property market.
 
 ---
 
-## Features
+## 🎯 Problem Statement
 
-### Property Price Prediction
-The system predicts property prices using attributes such as:
+Real estate investment decisions are often plagued by incomplete market data, inconsistent pricing, and a lack of analytical tools. Buyers and investors are forced to rely on manual research and intuition.
 
-- Property size
-- Number of bedrooms
-- Number of bathrooms
-- Historical trends
-- Temporal information
-
-### Future Value Estimation
-The platform estimates the future value of a property based on expected growth rates and investment duration.
-
-### Business Analytics
-The system provides analytical outputs including:
-
-- Return on Investment (ROI)
-- Expected profit estimation
-- Risk categorization
-- Market segment analysis
-
-### Property Classification
-Properties are categorized into:
-
-- Business / Investment
-- Domestic Use
-- Quick Sale / Deal
-
-using clustering and classification techniques.
-
-### Dataset Management
-The system supports:
-
-- Seller property submissions
-- Admin-controlled validation
-- Dataset staging
-- Model retraining after approval
+This system addresses that gap by using machine learning to analyze property attributes and historical pricing trends — delivering accurate valuations and investment-grade insights instantly.
 
 ---
 
-## System Workflow
+## ✨ Features
 
-```text
-User Input
-    ↓
-Frontend Interface
-    ↓
-Flask Backend
-    ↓
-Data Preprocessing
-    ↓
-Hybrid Machine Learning Model
-    ↓
-Prediction and Analytics
-    ↓
+### 🔮 Property Price Prediction
+Predicts current market price using:
+- Property area (sq ft)
+- Number of BHK (bedrooms)
+- Temporal market trends (date-based features)
+
+### 📈 Future Value Estimation
+Projects future property value using a hybrid ML extrapolation combined with CAGR fallback logic for robust long-term estimates.
+
+### 💼 Investment Analytics
+Returns a full investment report including:
+- **ROI %** — Return on investment over the chosen period
+- **Expected Profit** — Absolute gain in INR
+- **Risk Category** — Low / Medium / High
+- **Recommendation** — Invest / Moderate Risk / Avoid / Strong Buy
+
+### 🏷️ Property Classification
+Automatically categorizes each property into:
+- `Business / Investment` — High area, commercial potential
+- `Domestic Use` — Standard residential
+- `Quick Sale / Deal` — Distressed asset, strong buy signal
+
+### 🧠 Hybrid ML Architecture
+- **Ridge Regression** as the base model (robust to outliers)
+- **Random Forest** trained on residuals for non-linear correction
+- **KMeans + KNN** pipeline for unsupervised property categorization
+
+---
+
+## 🗂️ Project Structure
+
+```
+smart-real-estate/
+├── app.py                   # Flask backend + REST API
+├── train.py                 # ML training pipeline
+├── hybrid_knn_models.pkl    # Pre-trained model bundle
+├── real_estate_dataset.csv  # 288 Bangalore listings (99acres)
+├── requirements.txt         # Python dependencies
+├── Procfile                 # Railway/gunicorn deployment config
+├── templates/
+│   └── index.html           # Frontend UI
+└── static/
+    ├── css/                 # Stylesheets
+    └── js/                  # Client-side scripts
+```
+
+---
+
+## 🔧 Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Backend | Python, Flask, Gunicorn |
+| ML Models | scikit-learn (Ridge, RandomForest, KMeans, KNN) |
+| Data Processing | pandas, numpy, python-dateutil |
+| Frontend | HTML, CSS, JavaScript |
+| Deployment | Railway |
+| Data Source | 99acres.com (Bangalore listings) |
+
+---
+
+## 🚀 Local Setup
+
+### Prerequisites
+- Python 3.10+
+- Git
+
+### Steps
+
+```bash
+# Clone the repo
+git clone https://github.com/Vaishnavi-A-Das/smart-real-estate.git
+cd smart-real-estate
+
+# Create virtual environment
+python -m venv venv
+venv\Scripts\activate        # Windows
+# source venv/bin/activate   # Mac/Linux
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the app
+python app.py
+```
+
+Open → **http://localhost:5000**
+
+### (Optional) Retrain the Model
+
+```bash
+python train.py
+```
+
+> The repo ships with a pre-trained `hybrid_knn_models.pkl` — retraining is only needed if you update the dataset.
+
+---
+
+## 📡 API Reference
+
+### `POST /api/predict`
+
+**Request Body:**
+```json
+{
+  "area": 1200,
+  "bhk": 3,
+  "expectedGrowth": 7.5,
+  "investmentPeriod": 5
+}
+```
+
+**Response:**
+```json
+{
+  "predicted_price": 8500000.0,
+  "future_value": 12045678.5,
+  "roi_percentage": 41.71,
+  "profit": 3545678.5,
+  "recommendation": "Invest",
+  "market_segment": "Mid-Range",
+  "risk_category": "Low",
+  "property_category": "Domestic Use"
+}
+```
+
+---
+
+## 🧪 Model Performance
+
+| Metric | Value |
+|---|---|
+| Algorithm | Ridge + RandomForest Hybrid |
+| Train/Test Split | 70 / 30 |
+| Evaluation | MAE, R² Score |
+| Categorization | KMeans (3 clusters) → KNN Classifier |
+
+---
+
+## 🗺️ System Workflow
+
+```
+User Input (Area, BHK, Growth Rate, Investment Period)
+        ↓
+Flask REST API (/api/predict)
+        ↓
+Data Preprocessing (scaling, date encoding)
+        ↓
+Hybrid ML Model (Ridge + Random Forest)
+        ↓
+KNN Property Categorization
+        ↓
+Investment Analytics (ROI, Profit, Risk, Recommendation)
+        ↓
 Result Dashboard
+```
+
+---
+
+## 👩‍💻 Authors
+
+Both authors contributed equally to this project.
+
+- [Vaishnavi A Das](https://github.com/Vaishnavi-A-Das)
+- [Laxmi Vadthyavath](https://github.com/laxmivadthyavath99)
+
+---
+
+## 📄 License
+
+This project is for academic and research purposes.
